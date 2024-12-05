@@ -18,13 +18,13 @@ network cluster
         int Num @prompt("Number of Host") = default(15);
         double hellointerval @unit(s) = default(1s);
         @display("bgi=,s;bgb=1000,1000");
-        volatile double posX = uniform(100,900);
-        volatile double posY = uniform(100,900);
         //double posX = uniform(0,900);
         //double posY = uniform(0,900);
     submodules:
-        Host[Num]: Host{
-			parameters:
-			    @display("p=$posX,$posY");        
+        Radio:Radio{
+        	parameters:
+        	    @display("p=950,50");
         }
+        Host[Num]: Host;
+    connections allowunconnected:
 }

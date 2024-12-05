@@ -25,6 +25,7 @@ class Hello;
  *     int Hop;
  *     int ID;
  *     int Seq;
+ *     int clusterNum;
  * }
  * </pre>
  */
@@ -34,6 +35,7 @@ class Hello : public ::omnetpp::cMessage
     int Hop = 0;
     int ID = 0;
     int Seq = 0;
+    int clusterNum = 0;
 
   private:
     void copy(const Hello& other);
@@ -58,6 +60,9 @@ class Hello : public ::omnetpp::cMessage
 
     virtual int getSeq() const;
     virtual void setSeq(int Seq);
+
+    virtual int getClusterNum() const;
+    virtual void setClusterNum(int clusterNum);
 };
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const Hello& obj) {obj.parsimPack(b);}

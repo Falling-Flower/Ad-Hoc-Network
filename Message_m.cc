@@ -178,6 +178,7 @@ void Hello::copy(const Hello& other)
     this->Hop = other.Hop;
     this->ID = other.ID;
     this->Seq = other.Seq;
+    this->clusterNum = other.clusterNum;
 }
 
 void Hello::parsimPack(omnetpp::cCommBuffer *b) const
@@ -186,6 +187,7 @@ void Hello::parsimPack(omnetpp::cCommBuffer *b) const
     doParsimPacking(b,this->Hop);
     doParsimPacking(b,this->ID);
     doParsimPacking(b,this->Seq);
+    doParsimPacking(b,this->clusterNum);
 }
 
 void Hello::parsimUnpack(omnetpp::cCommBuffer *b)
@@ -194,6 +196,7 @@ void Hello::parsimUnpack(omnetpp::cCommBuffer *b)
     doParsimUnpacking(b,this->Hop);
     doParsimUnpacking(b,this->ID);
     doParsimUnpacking(b,this->Seq);
+    doParsimUnpacking(b,this->clusterNum);
 }
 
 int Hello::getHop() const
@@ -226,6 +229,16 @@ void Hello::setSeq(int Seq)
     this->Seq = Seq;
 }
 
+int Hello::getClusterNum() const
+{
+    return this->clusterNum;
+}
+
+void Hello::setClusterNum(int clusterNum)
+{
+    this->clusterNum = clusterNum;
+}
+
 class HelloDescriptor : public omnetpp::cClassDescriptor
 {
   private:
@@ -234,6 +247,7 @@ class HelloDescriptor : public omnetpp::cClassDescriptor
         FIELD_Hop,
         FIELD_ID,
         FIELD_Seq,
+        FIELD_clusterNum,
     };
   public:
     HelloDescriptor();
@@ -300,7 +314,7 @@ const char *HelloDescriptor::getProperty(const char *propertyName) const
 int HelloDescriptor::getFieldCount() const
 {
     omnetpp::cClassDescriptor *base = getBaseClassDescriptor();
-    return base ? 3+base->getFieldCount() : 3;
+    return base ? 4+base->getFieldCount() : 4;
 }
 
 unsigned int HelloDescriptor::getFieldTypeFlags(int field) const
@@ -315,8 +329,9 @@ unsigned int HelloDescriptor::getFieldTypeFlags(int field) const
         FD_ISEDITABLE,    // FIELD_Hop
         FD_ISEDITABLE,    // FIELD_ID
         FD_ISEDITABLE,    // FIELD_Seq
+        FD_ISEDITABLE,    // FIELD_clusterNum
     };
-    return (field >= 0 && field < 3) ? fieldTypeFlags[field] : 0;
+    return (field >= 0 && field < 4) ? fieldTypeFlags[field] : 0;
 }
 
 const char *HelloDescriptor::getFieldName(int field) const
@@ -331,8 +346,9 @@ const char *HelloDescriptor::getFieldName(int field) const
         "Hop",
         "ID",
         "Seq",
+        "clusterNum",
     };
-    return (field >= 0 && field < 3) ? fieldNames[field] : nullptr;
+    return (field >= 0 && field < 4) ? fieldNames[field] : nullptr;
 }
 
 int HelloDescriptor::findField(const char *fieldName) const
@@ -342,6 +358,7 @@ int HelloDescriptor::findField(const char *fieldName) const
     if (strcmp(fieldName, "Hop") == 0) return baseIndex + 0;
     if (strcmp(fieldName, "ID") == 0) return baseIndex + 1;
     if (strcmp(fieldName, "Seq") == 0) return baseIndex + 2;
+    if (strcmp(fieldName, "clusterNum") == 0) return baseIndex + 3;
     return base ? base->findField(fieldName) : -1;
 }
 
@@ -357,8 +374,9 @@ const char *HelloDescriptor::getFieldTypeString(int field) const
         "int",    // FIELD_Hop
         "int",    // FIELD_ID
         "int",    // FIELD_Seq
+        "int",    // FIELD_clusterNum
     };
-    return (field >= 0 && field < 3) ? fieldTypeStrings[field] : nullptr;
+    return (field >= 0 && field < 4) ? fieldTypeStrings[field] : nullptr;
 }
 
 const char **HelloDescriptor::getFieldPropertyNames(int field) const
@@ -444,6 +462,7 @@ std::string HelloDescriptor::getFieldValueAsString(omnetpp::any_ptr object, int 
         case FIELD_Hop: return long2string(pp->getHop());
         case FIELD_ID: return long2string(pp->getID());
         case FIELD_Seq: return long2string(pp->getSeq());
+        case FIELD_clusterNum: return long2string(pp->getClusterNum());
         default: return "";
     }
 }
@@ -463,6 +482,7 @@ void HelloDescriptor::setFieldValueAsString(omnetpp::any_ptr object, int field, 
         case FIELD_Hop: pp->setHop(string2long(value)); break;
         case FIELD_ID: pp->setID(string2long(value)); break;
         case FIELD_Seq: pp->setSeq(string2long(value)); break;
+        case FIELD_clusterNum: pp->setClusterNum(string2long(value)); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'Hello'", field);
     }
 }
@@ -480,6 +500,7 @@ omnetpp::cValue HelloDescriptor::getFieldValue(omnetpp::any_ptr object, int fiel
         case FIELD_Hop: return pp->getHop();
         case FIELD_ID: return pp->getID();
         case FIELD_Seq: return pp->getSeq();
+        case FIELD_clusterNum: return pp->getClusterNum();
         default: throw omnetpp::cRuntimeError("Cannot return field %d of class 'Hello' as cValue -- field index out of range?", field);
     }
 }
@@ -499,6 +520,7 @@ void HelloDescriptor::setFieldValue(omnetpp::any_ptr object, int field, int i, c
         case FIELD_Hop: pp->setHop(omnetpp::checked_int_cast<int>(value.intValue())); break;
         case FIELD_ID: pp->setID(omnetpp::checked_int_cast<int>(value.intValue())); break;
         case FIELD_Seq: pp->setSeq(omnetpp::checked_int_cast<int>(value.intValue())); break;
+        case FIELD_clusterNum: pp->setClusterNum(omnetpp::checked_int_cast<int>(value.intValue())); break;
         default: throw omnetpp::cRuntimeError("Cannot set field %d of class 'Hello'", field);
     }
 }

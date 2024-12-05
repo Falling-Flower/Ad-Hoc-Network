@@ -11,15 +11,13 @@
 // 
 // You should have received a copy of the GNU Lesser General Public License
 // along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
+
 //
-simple Host
+// TODO auto-generated type
+//
+simple Radio
 {
     parameters:
-     @display("i=misc/node");
-     volatile double posX = uniform(100,900);
-     volatile double posY = uniform(100,900);
-		@display("p=$posX,$posY");    
-     double comRange;
-    gates:
-        input radioIn @directIn;
+        @display("i=block/wtx");
 }
