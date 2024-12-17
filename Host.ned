@@ -15,7 +15,7 @@
 simple Host
 {
     parameters:
-     @display("i=misc/node");
+     @display("i=misc/node,cl=grey");
      volatile double posX = uniform(100,900);
      volatile double posY = uniform(100,900);
 		@display("p=$posX,$posY");    
